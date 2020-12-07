@@ -1,7 +1,7 @@
 import unittest
 import sudokuSolver as s
 
-game_board = [ [3, 0, 6, 5, 0, 8, 4, 0, 0], 
+game_board = [ [0, 0, 6, 5, 0, 8, 4, 0, 0], 
                [5, 2, 0, 0, 0, 0, 0, 0, 0], 
                [0, 8, 7, 0, 0, 0, 0, 3, 1], 
                [0, 0, 3, 0, 1, 0, 0, 8, 0], 
@@ -60,7 +60,49 @@ class UnitTests(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected, 'Grid9 Test Failed')
 
-    #Begin Testing Row and Column Testing
+
+    # Begin Testing Row and Column Testing
+    # Test row 0 (+col0) 
+    def test_col0(self):
+        actual = s.isUniqueAnswer(game_board, x=0, y=0, num=2)
+        expected = True
+        self.assertEqual(actual, expected, 'Col0 and Row0 test Failed') 
+
+    # Test row2 (+col3)
+    def test_row2(self):
+        actual = s.isUniqueAnswer(game_board, x=2, y=3, num=1)
+        expected = False
+        self.assertEqual(actual, expected, 'Row2 and Col3 test Failed')
+
+    # Test col7 (+row4)
+    def test_row7(self):
+        actual = s.isUniqueAnswer(game_board, x=4, y=7, num=4)
+        expected = True
+        self.assertEqual(actual, expected, 'Row4 and Col7 test Failed')
+
+    # Test row5(+col0)
+    def test_row5(self):
+        actual = s.isUniqueAnswer(game_board, x=5, y=0, num=6)
+        expected = False
+        self.assertEqual(actual, expected, 'Row5 and Col0 test Failed')
+
+    # Test col6(+row1)
+    def test_col6(self):
+        actual = s.isUniqueAnswer(game_board, x=1, y=6, num=7)
+        expected = True
+        self.assertEqual(actual, expected, 'Row3 and Col6 test Failed')
+
+    # Test row8 and col8
+    def test_row8(self):
+        actual = s.isUniqueAnswer(game_board, x=8,y=8, num=2)
+        expected = False
+        self.assertEqual(actual, expected, 'Row8 and Col8 test Failed')
+
+    # Test row8 and col8
+    def test_col8(self):
+        actual = s.isUniqueAnswer(game_board, x=8,y=8, num=9)
+        expected = True
+        self.assertEqual(actual, expected, 'Row8 and Col8 test Failed')
 
 if __name__ == "__main__":
     unittest.main()

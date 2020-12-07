@@ -31,6 +31,37 @@ grid_start = {
     8 : (6, 6)
 }
 
+def isRowAndColUnique(game_board, x, y, num):
+ # -1 to account for set length later on
+    count_row = -2
+    count_col = -2
+    row_set = {num}
+    col_set = {num}
+    
+    # First Count number of -1's in the row and column
+    # Create the set of Unique Numbers
+    for i in range(9):
+        if(game_board[x][i] == 0):
+            count_row = count_row + 1
+        if(game_board[i][y] == 0):
+            count_col = count_col + 1
+        row_set.add(game_board[x][i])
+        col_set.add(game_board[i][y])
+        print("Row Set", row_set)
+        print("count_row", count_row)
+        print("Col Set", col_set)
+        print("count_col", count_col)
+
+    # Check if the value in row and column is unique
+    if(len(row_set) + count_row) != 9:
+        print("Enter Row Fail") 
+        return False
+    if (len(col_set) + count_col) != 9:
+        print("Enter Col Fail")
+        return False
+    return True
+
+
 # Function used to determined which grid the number is in
 # square grids assumed
 def isUnique3by3Grid(game_board, x, y, num):
@@ -61,27 +92,9 @@ def isUnique3by3Grid(game_board, x, y, num):
 
 
 # checks if rows, columns, and grids all have unique numbers - if so return true.
-# can break this function up
 def isUniqueAnswer(game_board, x, y, num):
-    # -1 to account for set length later on
-    count_row = -2
-    count_col = -2
-    row_set = {num}
-    col_set = {num}
-    
-    # First Count number of -1's in the row and column
-    # Create the set of Unique Numbers
-    for i in range(9):
-        if(game_board[x][i] == 0):
-            count_row = count_row + 1
-        if(game_board[i][y] == 0):
-            count_col = count_col + 1
-        row_set.add(game_board[x][i])
-        col_set.add(game_board[i][y])
-
-    # Check if the value in row and column is unique
-    if((len(row_set) + count_row) != 9 or (len(col_set) + count_col) != 9):
-        return False
+    if(not isRowAndColUnique(game_board,x,y,num)):
+       return False
     
     # Check if grid is unique
     if(not isUnique3by3Grid(game_board,x,y,num)):
