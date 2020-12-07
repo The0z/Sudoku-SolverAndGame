@@ -10,6 +10,7 @@ game_board = [ [3, 0, 6, 5, 0, 8, 4, 0, 0],
                [1, 3, 0, 0, 0, 0, 2, 5, 0], 
                [0, 0, 0, 0, 0, 0, 0, 7, 4], 
                [0, 0, 5, 2, 0, 6, 3, 0, 0] ]
+orig_board = game_board.copy()
 
 
 # class used to test cases
@@ -130,6 +131,36 @@ class UnitTests(unittest.TestCase):
         actual = s.isUniqueAnswer(game_board, x=2,y=5, num=4)
         expected = True
         self.assertEqual(actual, expected, 'Uni3 test Failed')
+
+
+    # Testing isPredefined - should return false if we try to modify an original
+    # Spot
+    def test_isPredefined0(self):
+        actual = s.isPredefined(orig_board, x=0, y=0)
+        expected = False
+        self.assertEqual(actual, expected, 'isPredefined0 Failed')
+
+    def test_isPredefined1(self):
+        actual = s.isPredefined(orig_board, x=6, y=1)
+        expected = False
+        self.assertEqual(actual, expected, 'isPredefined1 Failed')
+
+    def test_isPredefined2(self):
+        actual = s.isPredefined(orig_board, x=7, y=4)
+        expected = True
+        self.assertEqual(actual, expected, 'isPredefined2 Failed')
+
+
+    # Testing Increment
+    def test_increment0(self):
+        actual = s.increment(x=0, y =0, n=9)
+        expected = 0,1
+        self.assertEqual(actual,expected, 'increment0 failed')
+
+    def test_increment1(self):
+        actual = s.increment(x=5, y =9, n=9)
+        expected = 6,0
+        self.assertEqual(actual,expected, 'increment1 failed')
 
 
 if __name__ == "__main__":
