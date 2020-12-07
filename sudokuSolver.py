@@ -108,7 +108,7 @@ def isPredefined(orig_board, x, y):
 # Increments x and y to move across the board
 def increment(x, y, n):
     y = y + 1
-    if (y == n):
+    if (y >= n):
         y = 0
         x = x + 1
     return x, y
