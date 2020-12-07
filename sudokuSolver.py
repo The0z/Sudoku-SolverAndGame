@@ -32,7 +32,7 @@ grid_start = {
 }
 
 def isRowAndColUnique(game_board, x, y, num):
- # -1 to account for set length later on
+    # -2 to account for length check later on
     count_row = -2
     count_col = -2
     row_set = {num}
@@ -47,18 +47,13 @@ def isRowAndColUnique(game_board, x, y, num):
             count_col = count_col + 1
         row_set.add(game_board[x][i])
         col_set.add(game_board[i][y])
-        print("Row Set", row_set)
-        print("count_row", count_row)
-        print("Col Set", col_set)
-        print("count_col", count_col)
 
     # Check if the value in row and column is unique
-    if(len(row_set) + count_row) != 9:
-        print("Enter Row Fail") 
+    if((len(row_set) + count_row) != 9):
         return False
-    if (len(col_set) + count_col) != 9:
-        print("Enter Col Fail")
+    if ((len(col_set) + count_col) != 9):
         return False
+
     return True
 
 
