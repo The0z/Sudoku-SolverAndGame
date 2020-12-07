@@ -101,9 +101,9 @@ def isUniqueAnswer(game_board, x, y, num):
 # Purpose is to check if number was already predifined. If so return True, else False.
 def isPredefined(orig_board, x, y):
     if(orig_board[x][y] != 0):
-        return True
-    else:
         return False
+    else:
+        return True
 
 # Increments x and y to move across the board
 def increment(x, y, n):
@@ -123,7 +123,7 @@ def solveSudoku(game_board, x, y, n, pos):
         return True
 
     # First Check if spot is predefined, move on to next one if that is the case
-    if(isPredefined(orig_board, x, y)):
+    if(not isPredefined(orig_board, x, y)):
         new_x, new_y = increment(x, y, n)
         if(solveSudoku(game_board, new_x, new_y, n, pos+1)):
             return True
