@@ -1,9 +1,12 @@
 import sudokuSolver as s
 from unittest import main
 
-#Running Unit Tests
-main(module='test_module', exit=False)
+## Enable to Run Unit Tests
+# main(module='test_module', exit=False)
 
+## Enable for normal Running
+
+# Sudoku Board to Solve
 game_board = [ [3, 0, 6, 5, 0, 8, 4, 0, 0], 
                [5, 2, 0, 0, 0, 0, 0, 0, 0], 
                [0, 8, 7, 0, 0, 0, 0, 3, 1], 
@@ -14,3 +17,7 @@ game_board = [ [3, 0, 6, 5, 0, 8, 4, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 7, 4], 
                [0, 0, 5, 2, 0, 6, 3, 0, 0] ]
 
+## Solve the Board and Print it Out
+s.solveSudoku(game_board)
+## print solution
+#s.printSolution(game_board)

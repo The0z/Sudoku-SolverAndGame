@@ -160,8 +160,7 @@ class UnitTests(unittest.TestCase):
     def test_increment1(self):
         actual = s.increment(x=5, y =9, n=9)
         expected = 6,0
-        self.assertEqual(actual,expected, 'increment1 failed')
-
+        self.assertEqual(actual,expected, 'increment1 failed')        
 
 if __name__ == "__main__":
     unittest.main()

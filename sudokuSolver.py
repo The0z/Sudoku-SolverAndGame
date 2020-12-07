@@ -31,6 +31,9 @@ grid_start = {
     8 : (6, 6)
 }
 
+'''
+    Checks if row and column is unique.
+'''
 def isRowAndColUnique(game_board, x, y, num):
     # -2 to account for length check later on
     count_row = -2
@@ -56,9 +59,10 @@ def isRowAndColUnique(game_board, x, y, num):
 
     return True
 
-
-# Function used to determined which grid the number is in
-# square grids assumed
+'''
+    Function used to determined which grid the number is in
+    square grids assumed
+'''
 def isUnique3by3Grid(game_board, x, y, num):
     # Find the starting x and why value
     arr = grid_start.get(grid[x][y])   
@@ -85,38 +89,61 @@ def isUnique3by3Grid(game_board, x, y, num):
     # Return false if numbers aren't unique
     return False
 
-
-# checks if rows, columns, and grids all have unique numbers - if so return true.
+'''
+    Checks if rows, columns, and grids all have unique numbers - if so return true.
+'''
 def isUniqueAnswer(game_board, x, y, num):
-    if(not isRowAndColUnique(game_board,x,y,num)):
-       return False
-    
     # Check if grid is unique
     if(not isUnique3by3Grid(game_board,x,y,num)):
         return  False
-
+    
+    # Check if row and col is unique
+    if(not isRowAndColUnique(game_board,x,y,num)):
+       return False
+    
     # all above is unique
     return True
 
-# Purpose is to check if number was already predifined. If so return True, else False.
+'''
+    Purpose is to check if number was already predifined. If so return True, else False.
+'''
 def isPredefined(orig_board, x, y):
     if(orig_board[x][y] != 0):
         return False
     else:
         return True
 
-# Increments x and y to move across the board
+'''
+    Increments x and y to move across the sudoku board board
+'''
 def increment(x, y, n):
     y = y + 1
     if (y >= n):
         y = 0
-        x = x + 1
+        if(x < 9):
+            x = x + 1
     return x, y
 
-def solveSudoku(game_board, x, y, n, pos):
+def decrement(x, y, n):
+    y = y - 1
+    if(y < 0):
+        y = 9
+        if(x > 0):
+            x = x - 1
+    return x, y
+
+'''
+    Recursive function used to solve the Sudoku Board
+'''
+def solveSudokuUtil(game_board, x, y, n, pos):
     # Create Shallow Copy to be used to confirm we don't overwrite existing numbers. 
-    # Potential an array with just the index locations would be more efficient, but this will do for now.
+    #Potential an array with just the index locations would be more efficient, but this will do for now.
     orig_board = game_board.copy()
+
+    # Testing Purposes
+    #printSolution(game_board)
+    #print()
+    #print(pos);
 
     # If all the Sodoku numbers are filled end recursive function
     if (pos == n**2):
@@ -125,7 +152,7 @@ def solveSudoku(game_board, x, y, n, pos):
     # First Check if spot is predefined, move on to next one if that is the case
     if(not isPredefined(orig_board, x, y)):
         new_x, new_y = increment(x, y, n)
-        if(solveSudoku(game_board, new_x, new_y, n, pos+1)):
+        if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
             return True
     
     for num in range(1,10):
@@ -133,10 +160,31 @@ def solveSudoku(game_board, x, y, n, pos):
             game_board[x][y] = num
             new_x, new_y = increment(x, y, n)
             # Begin the recursion
-            if(solveSudoku(game_board, new_x, new_y, n, pos+1)):
+            if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
                 return True
             # if the above doesn't return true we need to backtrack!
-            game_board[x][y] = -1
+            game_board[x][y] = 0
     # Failed to find a solution!
     return False        
-            
+
+'''
+    Utlity Function to print sudoku board    
+'''
+def printSolution(game_board):
+    for x in range(9):
+        for y in range(9):
+            print(str(game_board[x][y]) + " ", end=' ')
+        print()
+
+'''
+    Main program that begins the solving and starts the printing process
+'''
+def solveSudoku(game_board):
+
+    solve_result = solveSudokuUtil(game_board, x=0, y=0, n=9, pos=0)
+
+    if(solve_result == True):
+        print("THE SOLVED SOLUTION IS")
+        printSolution(game_board)
+    else:
+        print("Error, Unsolvable or Solution Cannot be Found")
