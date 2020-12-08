@@ -13,6 +13,8 @@
 # unique numbers
 # Recursive function is the best option.
 
+import copy
+
 # Creating Grid
 grid1 = (0, 0, 0, 1, 1, 1, 2, 2, 2)
 grid2 = (3, 3, 3, 4, 4, 4, 5, 5, 5)
@@ -129,7 +131,10 @@ def increment(x, y, n):
 def solveSudokuUtil(game_board, x, y, n):
     # Create Shallow Copy to be used to confirm we don't overwrite existing numbers. 
     #Potential an array with just the index locations would be more efficient, but this will do for now.
-    orig_board = game_board.copy()
+    orig_board = copy.deepcopy(game_board)
+
+    #printSolution(game_board)
+    #print()
 
     #Create Exit Case:
     if(x + y == 16):
@@ -137,13 +142,14 @@ def solveSudokuUtil(game_board, x, y, n):
     else:
         while(isPredefined(game_board,x,y)):
             x, y = increment(x,y,n)
-        for num in range(10):
+        for num in range(1,10):
             if(isUniqueAnswer(game_board, x, y, num)):
                 game_board[x][y] = num
                 x_new , y_new = increment(x,y,n)
                 if(solveSudokuUtil(game_board,x,y,n)):
                     return True
-                game_board[x][y] = 0        
+                game_board[x][y] = 0     
+        # Triggers the backtracking (since the if above is evaluated as True)
         return False    
 
 '''
