@@ -95,13 +95,16 @@ def isUnique3by3Grid(game_board, x, y, num):
 def isUniqueAnswer(game_board, x, y, num):
     # Check if grid is unique
     if(not isUnique3by3Grid(game_board,x,y,num)):
+        #print("Failed Column")
         return  False
     
     # Check if row and col is unique
     if(not isRowAndColUnique(game_board,x,y,num)):
+       #print("Failed Row")
        return False
     
     # all above is unique
+    #print("True in isUnique Answer")
     return True
 
 '''
@@ -109,25 +112,25 @@ def isUniqueAnswer(game_board, x, y, num):
 '''
 def isPredefined(orig_board, x, y):
     if(orig_board[x][y] != 0):
-        return False
-    else:
         return True
+    else:
+        return False
 
 '''
     Increments x and y to move across the sudoku board board
 '''
 def increment(x, y, n):
     y = y + 1
-    if (y >= n):
+    if (y >= 9):
         y = 0
-        if(x < 9):
+        if(x < 8):
             x = x + 1
     return x, y
 
 def decrement(x, y, n):
     y = y - 1
     if(y < 0):
-        y = 9
+        y = 8
         if(x > 0):
             x = x - 1
     return x, y
@@ -135,37 +138,49 @@ def decrement(x, y, n):
 '''
     Recursive function used to solve the Sudoku Board
 '''
-def solveSudokuUtil(game_board, x, y, n, pos):
+def solveSudokuUtil(game_board, x, y, n):
     # Create Shallow Copy to be used to confirm we don't overwrite existing numbers. 
     #Potential an array with just the index locations would be more efficient, but this will do for now.
     orig_board = game_board.copy()
 
-    # Testing Purposes
-    #printSolution(game_board)
-    #print()
-    #print(pos);
-
-    # If all the Sodoku numbers are filled end recursive function
-    if (pos == n**2):
+    #Create Exit Case:
+    if(x + y == 16):
         return True
+    else:
+        while(isPredefined(game_board,x,y)):
+            x, y = increment(x,y,n)
+        for num in range(10):
+            if(isUniqueAnswer(game_board, x, y, num)):
+                game_board[x][y] = num
+                x_new , y_new = increment(x,y,n)
+                if(solveSudokuUtil(game_board,x,y,n)):
+                    return True
+                game_board[x][y] = 0        
+        return False
+        
 
-    # First Check if spot is predefined, move on to next one if that is the case
-    if(not isPredefined(orig_board, x, y)):
-        new_x, new_y = increment(x, y, n)
-        if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
-            return True
     
-    for num in range(1,10):
-        if(isUniqueAnswer(game_board, x, y, num)):
-            game_board[x][y] = num
-            new_x, new_y = increment(x, y, n)
-            # Begin the recursion
-            if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
-                return True
-            # if the above doesn't return true we need to backtrack!
-            game_board[x][y] = 0
-    # Failed to find a solution!
-    return False        
+
+
+
+
+
+    
+    # for num in range(1,10):
+    #     if(isPredefined(game_board, x,y)):
+    #         new_x, new_y = increment(x,y,n)
+    #         solveSudokuUtil(game_board, new_x, new_y, n, pos+1)
+
+    #     if(isUniqueAnswer(game_board, x, y, num)):
+    #         new_x, new_y = increment(x, y, n)
+    #         game_board[x][y] = num
+    #         # Begin the recursion
+    #         if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
+    #             return True
+    #         # if the above doesn't return true we need to backtrack!
+    #         game_board[x][y] = 0
+    # # Failed to find a solution!
+    # return False        
 
 '''
     Utlity Function to print sudoku board    
@@ -181,7 +196,7 @@ def printSolution(game_board):
 '''
 def solveSudoku(game_board):
 
-    solve_result = solveSudokuUtil(game_board, x=0, y=0, n=9, pos=0)
+    solve_result = solveSudokuUtil(game_board, x=0, y=0, n=9)
 
     if(solve_result == True):
         print("THE SOLVED SOLUTION IS")
