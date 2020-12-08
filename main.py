@@ -1,5 +1,7 @@
 import sudokuSolver as s
+import sudokuSolverV2 as sv
 from unittest import main
+import copy
 
 ## Enable to Run Unit Tests
 # main(module='test_module', exit=False)
@@ -29,6 +31,14 @@ game_board2 = [ [0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 
 ## Solve the Board and Print it Out
-s.solveSudoku(game_board1)
-## print solution
-#s.printSolution(game_board)
+print("Original One")
+s.solveSudoku(game_board2)
+
+print("Updated V2")
+
+game_board3 = copy.deepcopy(game_board1)
+
+# need to add test to full board!
+sv.solveSudoku(game_board3)
+
+
