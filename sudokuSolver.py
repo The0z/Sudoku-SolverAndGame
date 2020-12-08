@@ -78,10 +78,6 @@ def isUnique3by3Grid(game_board, x, y, num):
                 count_undef = count_undef + 1
             grid_set.add(game_board[x_start+i][y_start+j])   
     
-
-    #print(grid_set)
-    #print(count_undef)             
-
     # return true if all the numbers are unique
     if((len(grid_set) + count_undef) == 9):
         return True
@@ -127,14 +123,6 @@ def increment(x, y, n):
             x = x + 1
     return x, y
 
-def decrement(x, y, n):
-    y = y - 1
-    if(y < 0):
-        y = 8
-        if(x > 0):
-            x = x - 1
-    return x, y
-
 '''
     Recursive function used to solve the Sudoku Board
 '''
@@ -156,31 +144,7 @@ def solveSudokuUtil(game_board, x, y, n):
                 if(solveSudokuUtil(game_board,x,y,n)):
                     return True
                 game_board[x][y] = 0        
-        return False
-        
-
-    
-
-
-
-
-
-    
-    # for num in range(1,10):
-    #     if(isPredefined(game_board, x,y)):
-    #         new_x, new_y = increment(x,y,n)
-    #         solveSudokuUtil(game_board, new_x, new_y, n, pos+1)
-
-    #     if(isUniqueAnswer(game_board, x, y, num)):
-    #         new_x, new_y = increment(x, y, n)
-    #         game_board[x][y] = num
-    #         # Begin the recursion
-    #         if(solveSudokuUtil(game_board, new_x, new_y, n, pos+1)):
-    #             return True
-    #         # if the above doesn't return true we need to backtrack!
-    #         game_board[x][y] = 0
-    # # Failed to find a solution!
-    # return False        
+        return False    
 
 '''
     Utlity Function to print sudoku board    
